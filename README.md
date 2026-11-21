@@ -27,11 +27,22 @@ Endpoints (porta 3001):
 - `GET /transactions` lista
 - `GET /transactions/:id` busca uma
 
+## notification-service
+
+```bash
+cd notification-service
+cp .env.example .env
+npm install
+npm run start:dev
+```
+
+Consome a fila `notifications` do RabbitMQ e mostra a notificação no console (porta 3002).
+
 ## Status do fluxo
 
 - [x] I. salvar transação com status pendente
-- [ ] II. publicar mensagem de "solicitação recebida" na fila
-- [ ] III. notification-service consumir e notificar
-- [ ] IV. confirmar a transação (status SUCCESS)
+- [x] II. publicar mensagem de "solicitação recebida" na fila
+- [x] III. notification-service consumir e notificar
+- [x] IV. confirmar a transação (status SUCCESS)
 - [ ] V. publicar mensagem de "transação confirmada"
 - [ ] VI. notification-service consumir e notificar
