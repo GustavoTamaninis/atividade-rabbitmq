@@ -1,6 +1,9 @@
 import { Controller, Logger } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
-import { TRANSACTION_RECEIVED_EVENT } from './notification.constants';
+import {
+  TRANSACTION_RECEIVED_EVENT,
+  TRANSACTION_CONFIRMED_EVENT
+} from './notification.constants';
 
 // Dados da transação enviados pelo payment-service
 interface TransactionMessage {
@@ -23,5 +26,15 @@ export class NotificationsController {
     this.logger.log(
       `Notificação para ${userEmail}: recebemos sua solicitação de pagamento de R$ ${amount} (transação ${id})`,
     );
+  }
+
+  // Passo VI: recebe a mensagem de confirmação da transação e notifica o usuário
+  @EventPattern(TRANSACTION_CONFIRMED_EVENT)
+  handleTransactionConfirmed(@Payload() transaction: TransactionMessage){
+    const { userEmail, amount, id} = transaction;
+
+    this.logger.log(
+      `Notificação para ${userEmail}: seu pagamento de R$ ${amount} foi confirmado (transação ${id})`,
+    )
   }
 }

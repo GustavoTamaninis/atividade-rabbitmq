@@ -11,6 +11,7 @@ import { CreateTransactionDto } from './dto/create-transaction.dto';
 import {
   NOTIFICATION_CLIENT,
   TRANSACTION_RECEIVED_EVENT,
+  TRANSACTION_CONFIRMED_EVENT,
 } from './notification.constants';
 
 @Injectable()
@@ -72,13 +73,15 @@ export class TransactionsService {
   }
 
   // Passo IV: atualiza o status da transação para SUCCESS
-  // TODO: passo V (publicar 'transaction.confirmed')
+  // Passo V: publica 'transaction.confirmed' para o notification-service
   private async confirm(id: string) {
     try {
-      await this.prisma.transaction.update({
+      const transaction = await this.prisma.transaction.update({
         where: { id },
         data: { status: 'SUCCESS' },
       });
+
+      this.notificationClient.emit(TRANSACTION_CONFIRMED_EVENT, transaction);
       this.logger.log(`Transação ${id} confirmada`);
     } catch (error) {
       this.logger.error(`Erro ao confirmar a transação ${id}`, error);
