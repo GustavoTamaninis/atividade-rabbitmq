@@ -21,7 +21,7 @@ npx prisma migrate deploy
 npm run start:dev
 ```
 
-Endpoints (porta 3000):
+Endpoints (porta 3001):
 
 - `POST /transactions` com `{ "userId": "1", "userEmail": "a@a.com", "amount": 100 }` cria a transação com status `PENDING`
 - `GET /transactions` lista
