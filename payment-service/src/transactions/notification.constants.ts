@@ -6,3 +6,6 @@ export const NOTIFICATIONS_QUEUE = 'notifications';
 
 // Eventos publicados na fila
 export const TRANSACTION_RECEIVED_EVENT = 'transaction.received';
+
+// Evento de confirmação da transação
+export const TRANSACTION_CONFIRMED_EVENT = 'transaction.confirmed'
